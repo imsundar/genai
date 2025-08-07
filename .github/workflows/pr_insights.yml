@@ -12,21 +12,16 @@ jobs:
       - name: Checkout PR code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Ensures full history is available
-
-      - name: Fetch all branches to compare base/main
-        run: |
-          git fetch --no-tags --prune --depth=0 origin +refs/heads/*:refs/remotes/origin/*
+          fetch-depth: 0  # Fetch full history to get base branch
 
       - name: Get PR diff
         run: |
-          git diff origin/${{ github.base_ref }}...HEAD > pr_diff.txt
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          git diff origin/${{ github.event.pull_request.base.ref }}...HEAD > pr_diff.txt
 
       - name: Send PR diff to EC2 Agent
-        env:
-          BACKEND_URL: http://54.82.38.189:6000/analyze-pr
         run: |
-          curl -X POST "$BACKEND_URL" \
+          curl -X POST "http://54.82.38.189:6000/analyze-pr" \
             -H "Content-Type: application/json" \
             -d @<(jq -n \
               --arg pr_number "${{ github.event.pull_request.number }}" \
