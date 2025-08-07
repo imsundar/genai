@@ -1,14 +1,14 @@
 #include <User.h>
 
 int main(){
-    User sundar_("Sundar"); 
+    User alex_("Alex"); 
     
-    sundar_.addUserExpense("bills", "internet bill", 900); 
-    sundar_.addUserExpense("bills", "dish tv bill", 350); 
-    sundar_.addUserExpense("bills", "Electricity", 3000); 
-    sundar_.addUserExpense("online", "flipkart purchase", 1000); 
+    alex_.addUserExpense("bills", "internet subscription", 900); 
+    alex_.addUserExpense("bills", "dish tv", 350); 
+    alex_.addUserExpense("bills", "Electricity", 3000); 
+    alex_.addUserExpense("shopping", "amazon purchase", 1000); 
     
-    sundar_.getTotalUserExpense(); 
-    sundar_.printSpecificUserExpenseDetails("bills");    
+    alex_.getTotalUserExpense(); 
+    alex_.printSpecificUserExpenseDetails("bills");    
     
 }
